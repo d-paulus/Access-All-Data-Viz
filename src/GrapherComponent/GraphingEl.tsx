@@ -273,7 +273,7 @@ export function CountryGraphingEl(props: CountryGraphingElProps) {
     <div className='margin-top-06 margin-bottom-06'>
       <div className='dashboard-container'>
         <div className='tabs-for-graphing-interface-container'>
-          <button
+          {/* <button
             type='button'
             className={`tabs-for-graphing-interface${
               graphType === 'map' ? ' selected' : ''
@@ -294,7 +294,7 @@ export function CountryGraphingEl(props: CountryGraphingElProps) {
               }
             />
             <TabText>Maps</TabText>
-          </button>
+          </button> */}
           <button
             type='button'
             className={`tabs-for-graphing-interface${
@@ -345,7 +345,7 @@ export function CountryGraphingEl(props: CountryGraphingElProps) {
               <TabText>Disaggregation</TabText>
             </button>
           ) : null} */}
-          <button
+          {/* <button
             type='button'
             className={`tabs-for-graphing-interface${
               graphType === 'scatterPlot' ? ' selected' : ''
@@ -368,7 +368,7 @@ export function CountryGraphingEl(props: CountryGraphingElProps) {
               }
             />
             <TabText>Correlation</TabText>
-          </button>
+          </button> */}
           <button
             type='button'
             className={`tabs-for-graphing-interface${

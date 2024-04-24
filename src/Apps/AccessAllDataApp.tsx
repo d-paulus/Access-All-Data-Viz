@@ -1,7 +1,7 @@
 import { Tabs } from 'antd';
 import DataExplorer from '../Components/DataExplorer';
 import { DataSetList } from '../Components/DataSetList';
-import { AggregatedRegionVisualization } from '../RegionVisualization';
+// import { AggregatedRegionVisualization } from '../RegionVisualization';
 
 export function AccessAllDataApp() {
   const mainTabs = [
@@ -10,11 +10,11 @@ export function AccessAllDataApp() {
       label: 'Data Explorer',
       children: <DataExplorer region={{ code: 'WLD', name: 'World' }} />,
     },
-    {
-      key: 'aggregatedDataExplorer',
-      label: 'Aggregated Data Explorer',
-      children: <AggregatedRegionVisualization UNDPRegion='WLD' />,
-    },
+    // {
+    //   key: 'aggregatedDataExplorer',
+    //   label: 'Aggregated Data Explorer',
+    //   children: <AggregatedRegionVisualization UNDPRegion='WLD' />,
+    // },
     {
       key: 'datasets',
       label: 'Datasets',
@@ -36,8 +36,9 @@ export function AccessAllDataApp() {
           }}
         >
           <h2 className='undp-typography margin-bottom-03 page-title'>
-            Access All Data
+            UNOCC Data Catalog
           </h2>
+          <p>powered by UNDP Data Futures Exchange</p>
         </div>
       </div>
       <Tabs

@@ -3,7 +3,7 @@ import { DataSetList } from '../Components/DataSetList';
 import DataExplorer from '../Components/DataExplorer';
 import { COUNTRIES_BY_UNDP_REGIONS } from '../Constants';
 import { AboutPage } from '../AboutPage';
-import { AggregatedRegionVisualization } from '../RegionVisualization';
+// import { AggregatedRegionVisualization } from '../RegionVisualization';
 import { INTRO_TEXT } from '../IntroductionText';
 
 interface Props {
@@ -30,11 +30,11 @@ export function RegionApp(props: Props) {
         />
       ),
     },
-    {
-      key: 'aggregatedDataExplorer',
-      label: 'Aggregated Data Explorer',
-      children: <AggregatedRegionVisualization UNDPRegion={region || 'WLD'} />,
-    },
+    // {
+    //   key: 'aggregatedDataExplorer',
+    //   label: 'Aggregated Data Explorer',
+    //   children: <AggregatedRegionVisualization UNDPRegion={region || 'WLD'} />,
+    // },
     {
       key: 'datasets',
       label: 'Datasets',

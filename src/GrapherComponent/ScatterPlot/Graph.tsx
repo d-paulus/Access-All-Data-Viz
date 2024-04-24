@@ -133,189 +133,147 @@ export function Graph(props: Props) {
       };
     }),
   ).filter(d => d.x !== undefined && d.y !== undefined);
-  console.log('Initial data:', data[0].indicators);
-  const xValues = new Map();
-  const yValues = new Map();
-  const dataFormatted =
-    data.length === 1
-      ? data[0].indicators.flatMap(indicator => {
-          // Process each indicator and populate xValues and yValues Maps
-          indicator.yearlyData.forEach(yearData => {
-            if (indicator.indicator === xAxisIndicator) {
-              xValues.set(yearData.year, yearData.value);
-            }
-            if (indicator.indicator === yAxisIndicator) {
-              yValues.set(yearData.year, yearData.value);
-            }
-          });
-
-          // Map to final structure where both x and y values exist
-          return indicator.yearlyData
-            .map(yearData => {
-              const xVal = xValues.get(yearData.year);
-              const yVal = yValues.get(yearData.year);
-              if (xVal !== undefined && yVal !== undefined) {
-                return {
-                  countryCode: data[0]['Alpha-3 code'],
-                  xVal,
-                  yVal,
-                  radiusYear: yearData.year,
-                  colorYear: yearData.year,
-                  xYear: yearData.year,
-                  yYear: yearData.year,
-                  radiusValue: 5,
-                  colorVal: 'Africa',
-                  region: true,
-                  countryGroup: true,
-                };
-              }
-              return null;
-            })
-            .filter(yearData => yearData !== null);
-        })
-      : orderBy(
-          data
-            .map(d => {
-              const xIndicatorIndex = d.indicators.findIndex(
-                el => xIndicatorMetaData.DataKey === el.indicator,
-              );
-              const yIndicatorIndex = d.indicators.findIndex(
-                el => yIndicatorMetaData.DataKey === el.indicator,
-              );
-              const colorIndicatorIndex =
-                colorIndicator === 'Human Development Index'
-                  ? d.indicators.findIndex(
-                      el => el.indicator === 'Human development index (HDI)',
-                    )
-                  : d.indicators.findIndex(
-                      el => colorIndicatorMetaData?.DataKey === el.indicator,
-                    );
-              const radiusIndicatorIndex = radiusScale
-                ? d.indicators.findIndex(
-                    el => sizeIndicatorMetaData?.DataKey === el.indicator,
-                  )
-                : -1;
-
-              const radiusValue = !radiusScale
-                ? 5
-                : radiusIndicatorIndex === -1
-                ? undefined
-                : year !== -1 && !showMostRecentData
-                ? d.indicators[radiusIndicatorIndex].yearlyData[
-                    d.indicators[radiusIndicatorIndex].yearlyData.findIndex(
-                      el => el.year === year,
-                    )
-                  ]?.value
-                : d.indicators[radiusIndicatorIndex].yearlyData[
-                    d.indicators[radiusIndicatorIndex].yearlyData.length - 1
-                  ]?.value;
-              const xVal =
-                xIndicatorIndex === -1
-                  ? undefined
-                  : year !== -1 && !showMostRecentData
-                  ? d.indicators[xIndicatorIndex].yearlyData[
-                      d.indicators[xIndicatorIndex].yearlyData.findIndex(
-                        el => el.year === year,
-                      )
-                    ]?.value
-                  : d.indicators[xIndicatorIndex].yearlyData[
-                      d.indicators[xIndicatorIndex].yearlyData.length - 1
-                    ]?.value;
-              const yVal =
-                yIndicatorIndex === -1
-                  ? undefined
-                  : year !== -1 && !showMostRecentData
-                  ? d.indicators[yIndicatorIndex].yearlyData[
-                      d.indicators[yIndicatorIndex].yearlyData.findIndex(
-                        el => el.year === year,
-                      )
-                    ]?.value
-                  : d.indicators[yIndicatorIndex].yearlyData[
-                      d.indicators[yIndicatorIndex].yearlyData.length - 1
-                    ]?.value;
-              const colorVal =
-                colorIndicator === 'Continents'
-                  ? d['Group 1']
-                  : colorIndicator === 'Income Groups'
-                  ? d['Income group']
-                  : colorIndicator === 'Human Development Index'
-                  ? year !== -1 && !showMostRecentData
-                    ? d.indicators[colorIndicatorIndex]?.yearlyData[
-                        d.indicators[colorIndicatorIndex].yearlyData.findIndex(
-                          el => el.year === year,
-                        )
-                      ]?.value
-                    : d.indicators[colorIndicatorIndex]?.yearlyData[
-                        d.indicators[colorIndicatorIndex].yearlyData.length - 1
-                      ]?.value
-                  : colorIndicatorIndex === -1
-                  ? undefined
-                  : year !== -1 && !showMostRecentData
-                  ? d.indicators[colorIndicatorIndex].yearlyData[
-                      d.indicators[colorIndicatorIndex].yearlyData.findIndex(
-                        el => el.year === year,
-                      )
-                    ]?.value
-                  : d.indicators[colorIndicatorIndex].yearlyData[
-                      d.indicators[colorIndicatorIndex].yearlyData.length - 1
-                    ]?.value;
-              const countryGroup =
-                selectedCountryGroup === 'All' ? true : d[selectedCountryGroup];
-              const region = !!(
-                selectedRegions.length === 0 ||
-                selectedRegions.indexOf(d['Group 2']) !== -1
-              );
-              const xYear =
-                year === -1 || showMostRecentData
-                  ? d.indicators[xIndicatorIndex]?.yearlyData[
-                      d.indicators[xIndicatorIndex].yearlyData.length - 1
-                    ]?.year
-                  : year;
-              const yYear =
-                year === -1 || showMostRecentData
-                  ? d.indicators[yIndicatorIndex]?.yearlyData[
-                      d.indicators[yIndicatorIndex].yearlyData.length - 1
-                    ]?.year
-                  : year;
-              const radiusYear =
-                (year === -1 || showMostRecentData) &&
-                radiusIndicatorIndex !== -1
-                  ? d.indicators[radiusIndicatorIndex]?.yearlyData[
-                      d.indicators[radiusIndicatorIndex].yearlyData.length - 1
-                    ]?.year
-                  : year;
-              const colorYear =
-                (year === -1 || showMostRecentData) &&
-                colorIndicatorIndex !== -1
-                  ? d.indicators[colorIndicatorIndex]?.yearlyData[
-                      d.indicators[colorIndicatorIndex].yearlyData.length - 1
-                    ]?.year
-                  : year;
-              return {
-                countryCode: d['Alpha-3 code'],
-                radiusValue,
-                xVal,
-                yVal,
-                xYear,
-                yYear,
-                radiusYear,
-                colorYear,
-                colorVal,
-                region,
-                countryGroup,
-              };
-            })
-            .filter(
-              d =>
-                d.radiusValue !== undefined &&
-                d.xVal !== undefined &&
-                d.yVal !== undefined &&
-                d.countryGroup &&
-                d.region,
-            ),
-          'radiusValue',
-          'desc',
+  const dataFormatted = orderBy(
+    data
+      .map(d => {
+        const xIndicatorIndex = d.indicators.findIndex(
+          el => xIndicatorMetaData.DataKey === el.indicator,
         );
+        const yIndicatorIndex = d.indicators.findIndex(
+          el => yIndicatorMetaData.DataKey === el.indicator,
+        );
+        const colorIndicatorIndex =
+          colorIndicator === 'Human Development Index'
+            ? d.indicators.findIndex(
+                el => el.indicator === 'Human development index (HDI)',
+              )
+            : d.indicators.findIndex(
+                el => colorIndicatorMetaData?.DataKey === el.indicator,
+              );
+        const radiusIndicatorIndex = radiusScale
+          ? d.indicators.findIndex(
+              el => sizeIndicatorMetaData?.DataKey === el.indicator,
+            )
+          : -1;
+
+        const radiusValue = !radiusScale
+          ? 5
+          : radiusIndicatorIndex === -1
+          ? undefined
+          : year !== -1 && !showMostRecentData
+          ? d.indicators[radiusIndicatorIndex].yearlyData[
+              d.indicators[radiusIndicatorIndex].yearlyData.findIndex(
+                el => el.year === year,
+              )
+            ]?.value
+          : d.indicators[radiusIndicatorIndex].yearlyData[
+              d.indicators[radiusIndicatorIndex].yearlyData.length - 1
+            ]?.value;
+        const xVal =
+          xIndicatorIndex === -1
+            ? undefined
+            : year !== -1 && !showMostRecentData
+            ? d.indicators[xIndicatorIndex].yearlyData[
+                d.indicators[xIndicatorIndex].yearlyData.findIndex(
+                  el => el.year === year,
+                )
+              ]?.value
+            : d.indicators[xIndicatorIndex].yearlyData[
+                d.indicators[xIndicatorIndex].yearlyData.length - 1
+              ]?.value;
+        const yVal =
+          yIndicatorIndex === -1
+            ? undefined
+            : year !== -1 && !showMostRecentData
+            ? d.indicators[yIndicatorIndex].yearlyData[
+                d.indicators[yIndicatorIndex].yearlyData.findIndex(
+                  el => el.year === year,
+                )
+              ]?.value
+            : d.indicators[yIndicatorIndex].yearlyData[
+                d.indicators[yIndicatorIndex].yearlyData.length - 1
+              ]?.value;
+        const colorVal =
+          colorIndicator === 'Continents'
+            ? d['Group 1']
+            : colorIndicator === 'Income Groups'
+            ? d['Income group']
+            : colorIndicator === 'Human Development Index'
+            ? year !== -1 && !showMostRecentData
+              ? d.indicators[colorIndicatorIndex]?.yearlyData[
+                  d.indicators[colorIndicatorIndex].yearlyData.findIndex(
+                    el => el.year === year,
+                  )
+                ]?.value
+              : d.indicators[colorIndicatorIndex]?.yearlyData[
+                  d.indicators[colorIndicatorIndex].yearlyData.length - 1
+                ]?.value
+            : colorIndicatorIndex === -1
+            ? undefined
+            : year !== -1 && !showMostRecentData
+            ? d.indicators[colorIndicatorIndex].yearlyData[
+                d.indicators[colorIndicatorIndex].yearlyData.findIndex(
+                  el => el.year === year,
+                )
+              ]?.value
+            : d.indicators[colorIndicatorIndex].yearlyData[
+                d.indicators[colorIndicatorIndex].yearlyData.length - 1
+              ]?.value;
+        const countryGroup =
+          selectedCountryGroup === 'All' ? true : d[selectedCountryGroup];
+        const region = !!(
+          selectedRegions.length === 0 ||
+          selectedRegions.indexOf(d['Group 2']) !== -1
+        );
+        const xYear =
+          year === -1 || showMostRecentData
+            ? d.indicators[xIndicatorIndex]?.yearlyData[
+                d.indicators[xIndicatorIndex].yearlyData.length - 1
+              ]?.year
+            : year;
+        const yYear =
+          year === -1 || showMostRecentData
+            ? d.indicators[yIndicatorIndex]?.yearlyData[
+                d.indicators[yIndicatorIndex].yearlyData.length - 1
+              ]?.year
+            : year;
+        const radiusYear =
+          (year === -1 || showMostRecentData) && radiusIndicatorIndex !== -1
+            ? d.indicators[radiusIndicatorIndex]?.yearlyData[
+                d.indicators[radiusIndicatorIndex].yearlyData.length - 1
+              ]?.year
+            : year;
+        const colorYear =
+          (year === -1 || showMostRecentData) && colorIndicatorIndex !== -1
+            ? d.indicators[colorIndicatorIndex]?.yearlyData[
+                d.indicators[colorIndicatorIndex].yearlyData.length - 1
+              ]?.year
+            : year;
+        return {
+          countryCode: d['Alpha-3 code'],
+          radiusValue,
+          xVal,
+          yVal,
+          xYear,
+          yYear,
+          radiusYear,
+          colorYear,
+          colorVal,
+          region,
+          countryGroup,
+        };
+      })
+      .filter(
+        d =>
+          d.radiusValue !== undefined &&
+          d.xVal !== undefined &&
+          d.yVal !== undefined &&
+          d.countryGroup &&
+          d.region,
+      ),
+    'radiusValue',
+    'desc',
+  );
   const refXIndicatorIndex = regionData
     ? regionData.indicators.findIndex(
         el => xIndicatorMetaData.DataKey === el.indicator,
@@ -336,7 +294,6 @@ export function Graph(props: Props) {
       : regionData.indicators[refXIndicatorIndex].yearlyData[
           regionData.indicators[refXIndicatorIndex].yearlyData.length - 1
         ]?.value;
-  console.log('DataFormatted for plotting:', dataFormatted);
   const xMaxValue = keepAxisSame
     ? (maxBy(fullArray, d => d.x)?.x as number)
     : maxBy(dataFormatted, d => d.xVal)

@@ -71,7 +71,9 @@ function IndicatorListComponent(props: Props) {
                 closeModal();
               }}
             >
-              {el.IndicatorLabel}
+              {/* {el.IndicatorLabel} */}
+              <div>{el.IndicatorLabel}</div>
+              <div>{el.LabelSuffix && ` (${el.LabelSuffix})`}</div>
             </IndicatorCardEl>
           ))}
       </div>

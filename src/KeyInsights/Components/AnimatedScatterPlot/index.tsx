@@ -30,7 +30,6 @@ interface DataFormattedProps {
     yVal: number;
   }[];
 }
-
 export function ScatterGraph(props: Props) {
   const {
     dataId,

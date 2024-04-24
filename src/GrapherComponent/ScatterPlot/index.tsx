@@ -19,6 +19,7 @@ const GraphDiv = styled.div`
   }
 `;
 
+// console.log('before ScatterPlot index');
 export function ScatterPlot(props: Props) {
   const { data, indicators, UNDPRegion, regionData } = props;
 

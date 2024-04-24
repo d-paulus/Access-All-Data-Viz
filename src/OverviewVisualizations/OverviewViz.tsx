@@ -1,8 +1,8 @@
-import styled from 'styled-components';
+// import styled from 'styled-components';
 import { useRef, useState } from 'react';
 import { CountryGroupDataType, IndicatorMetaDataType } from '../Types';
 import { COUNTRIES_BY_UNDP_REGIONS } from '../Constants';
-import { GraphEl } from './GraphEl';
+// import { GraphEl } from './GraphEl';
 import { TOP_CARDS } from '../TopCards';
 
 interface Props {
@@ -11,17 +11,17 @@ interface Props {
   id: string;
 }
 
-const WrapperEl = styled.div`
-  scroll-snap-type: x proximity;
-  scroll-padding: 0;
-  scroll-padding-left: 0;
-  display: flex;
-  overflow-x: auto;
-  padding-bottom: 1rem;
-`;
+// const WrapperEl = styled.div`
+//   scroll-snap-type: x proximity;
+//   scroll-padding: 0;
+//   scroll-padding-left: 0;
+//   display: flex;
+//   overflow-x: auto;
+//   padding-bottom: 1rem;
+// `;
 
 export function OverviewViz(props: Props) {
-  const { data, indicators, id } = props;
+  const { data, id } = props;
   const WrapperRef = useRef<HTMLDivElement>(null);
   const [cursor, setCursor] = useState(
     'url(https://design.undp.org/static/media/arrow-right.125a0586.svg)',
@@ -82,7 +82,7 @@ export function OverviewViz(props: Props) {
               );
           }}
         >
-          <WrapperEl
+          {/* <WrapperEl
             className='flex-div stat-container undp-scrollbar'
             ref={WrapperRef}
           >
@@ -140,7 +140,7 @@ export function OverviewViz(props: Props) {
                 />
               ) : null,
             )}
-          </WrapperEl>
+          </WrapperEl> */}
         </div>
       ) : null}
     </div>

@@ -58,6 +58,8 @@ const LabelText = styled.text`
 
 export function SingleAxisGraph(props: Props) {
   const { data, indicators, svgWidth, svgHeight, country } = props;
+  console.log('SingleAxisGraph data');
+  console.log(data);
   const { xAxisIndicator, showLabel } = useContext(Context) as CtxDataType;
   const [hoverData, setHoverData] = useState<HoverDataType | undefined>(
     undefined,

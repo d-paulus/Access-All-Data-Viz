@@ -126,12 +126,20 @@ function CountryVisualization(props: Props) {
   const updateSignatureSolutionForDataList = (
     ss:
       | 'All'
-      | 'Energy'
-      | 'Environment'
-      | 'Gender'
-      | 'Governance'
-      | 'Poverty and Inequality'
-      | 'Resilience',
+      | 'Infrastructure & access to social services'
+      | 'Economic stability'
+      | 'Gender Equality'
+      | 'Social cohesion, gender equality & non-discrimination'
+      | 'Environment & climate'
+      | 'Public health'
+      | 'Food security, agriculture & land'
+      | 'Internal security'
+      | 'Political stability'
+      | 'Regional & global influences'
+      | 'Justice & rule of law'
+      | 'Displacement & migration'
+      | 'Democratic space'
+      | 'Unknown RMR Risk Area',
   ) => {
     dispatch({
       type: 'UPDATE_SIGNATURE_SOLUTION_FOR_DATALIST',

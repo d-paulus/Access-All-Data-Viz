@@ -123,13 +123,20 @@ export function ListEl(props: Props) {
                 className='undp-table-row-cell'
               >
                 <div style={{ paddingLeft: '1rem', paddingRight: '1rem' }}>
-                  <h5 className='undp-typography'>
+                  <p className='undp-typography'>
                     {
                       indicators[
                         indicators.findIndex(el => el.DataKey === d.indicator)
                       ].IndicatorLabel
                     }
-                  </h5>
+                  </p>
+                  <p className='undp-typography'>
+                    {
+                      indicators[
+                        indicators.findIndex(el => el.DataKey === d.indicator)
+                      ].IndicatorDescription
+                    }
+                  </p>
                 </div>
               </div>
               <div
@@ -140,7 +147,7 @@ export function ListEl(props: Props) {
                   'NA'
                 ) : (
                   <div style={{ paddingLeft: '1rem', paddingRight: '1rem' }}>
-                    <h4 className='undp-typography margin-bottom-00 bold'>
+                    <p className='undp-typography margin-bottom-00 bold'>
                       {indicators[
                         indicators.findIndex(el => el.DataKey === d.indicator)
                       ].LabelPrefix
@@ -179,7 +186,7 @@ export function ListEl(props: Props) {
                             ].LabelSuffix
                           }`
                         : ''}
-                    </h4>
+                    </p>
                     <p
                       className='undp-typography margin-bottom-00'
                       style={{

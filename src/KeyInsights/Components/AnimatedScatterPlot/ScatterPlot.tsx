@@ -77,72 +77,91 @@ export function ScatterPlot(props: Props) {
         .append('g')
         .attr('transform', `translate(${margin.left},${margin.top})`);
 
-      G.selectAll('.points')
-        .data(data)
-        .enter()
-        .append('circle')
-        .attr('class', 'points')
-        .attr('cx', (d: DataFormattedProps) =>
-          d.yearlyData.findIndex(el => el.year === year) !== -1
-            ? xScale(
-                d.yearlyData[d.yearlyData.findIndex(el => el.year === year)]
-                  .xVal,
-              )
-            : 0,
-        )
-        .attr('cy', (d: DataFormattedProps) =>
-          d.yearlyData.findIndex(el => el.year === year) !== -1
-            ? yScale(
-                d.yearlyData[d.yearlyData.findIndex(el => el.year === year)]
-                  .yVal,
-              )
-            : 0,
-        )
-        .attr('opacity', (d: DataFormattedProps) =>
-          d.yearlyData.findIndex(el => el.year === year) !== -1 ? 1 : 0,
-        )
-        .attr('r', (d: DataFormattedProps) =>
-          d.yearlyData.findIndex(el => el.year === year) !== -1 ? 5 : 0,
-        )
-        .attr('fill', (d: DataFormattedProps) => colorScale(d.group1));
-
-      const floating = () => {
+      // Check if only one country is present
+      const uniqueCountries = new Set(data.map(d => d.countryCode));
+      console.log('uniqueCountries');
+      console.log(uniqueCountries);
+      if (uniqueCountries.size === 1) {
+        // Plot all points for all years if only one country is present
+        data.forEach(countryData => {
+          countryData.yearlyData.forEach(yearData => {
+            G.append('circle')
+              .attr('cx', xScale(yearData.xVal))
+              .attr('cy', yScale(yearData.yVal))
+              .attr('r', 5)
+              .attr('fill', colorScale(countryData.group1))
+              .attr('opacity', 1);
+          });
+        });
+      } else {
         G.selectAll('.points')
-          .attr('opacity', (d: any) =>
-            d.yearlyData.findIndex((el: any) => el.year === year) !== -1
-              ? 1
-              : 0,
-          )
-          .transition()
-          .attr('cx', (d: any) =>
-            d.yearlyData.findIndex((el: any) => el.year === year) !== -1
+          .data(data)
+          .enter()
+          .append('circle')
+          .attr('class', 'points')
+          .attr('cx', (d: DataFormattedProps) =>
+            d.yearlyData.findIndex(el => el.year === year) !== -1
               ? xScale(
-                  d.yearlyData[
-                    d.yearlyData.findIndex((el: any) => el.year === year)
-                  ].xVal,
+                  d.yearlyData[d.yearlyData.findIndex(el => el.year === year)]
+                    .xVal,
                 )
               : 0,
           )
-          .attr('cy', (d: any) =>
-            d.yearlyData.findIndex((el: any) => el.year === year) !== -1
+          .attr('cy', (d: DataFormattedProps) =>
+            d.yearlyData.findIndex(el => el.year === year) !== -1
               ? yScale(
-                  d.yearlyData[
-                    d.yearlyData.findIndex((el: any) => el.year === year)
-                  ].yVal,
+                  d.yearlyData[d.yearlyData.findIndex(el => el.year === year)]
+                    .yVal,
                 )
               : 0,
           )
-          .attr('r', (d: any) =>
-            d.yearlyData.findIndex((el: any) => el.year === year) !== -1
-              ? 5
-              : 0,
-          );
-        graphSVG.selectAll('.yearText').text(year);
-        year =
-          year + yearIncrement > finalYear ? baseYear : year + yearIncrement;
-      };
+          .attr('opacity', (d: DataFormattedProps) =>
+            d.yearlyData.findIndex(el => el.year === year) !== -1 ? 1 : 0,
+          )
+          .attr('r', (d: DataFormattedProps) =>
+            d.yearlyData.findIndex(el => el.year === year) !== -1 ? 5 : 0,
+          )
+          .attr('fill', (d: DataFormattedProps) => colorScale(d.group1));
 
-      interval(floating, 1000);
+        year = baseYear;
+        const floating = () => {
+          G.selectAll('.points')
+            .attr('opacity', (d: any) =>
+              d.yearlyData.findIndex((el: any) => el.year === year) !== -1
+                ? 1
+                : 0,
+            )
+            .transition()
+            .attr('cx', (d: any) =>
+              d.yearlyData.findIndex((el: any) => el.year === year) !== -1
+                ? xScale(
+                    d.yearlyData[
+                      d.yearlyData.findIndex((el: any) => el.year === year)
+                    ].xVal,
+                  )
+                : 0,
+            )
+            .attr('cy', (d: any) =>
+              d.yearlyData.findIndex((el: any) => el.year === year) !== -1
+                ? yScale(
+                    d.yearlyData[
+                      d.yearlyData.findIndex((el: any) => el.year === year)
+                    ].yVal,
+                  )
+                : 0,
+            )
+            .attr('r', (d: any) =>
+              d.yearlyData.findIndex((el: any) => el.year === year) !== -1
+                ? 5
+                : 0,
+            );
+          graphSVG.selectAll('.yearText').text(year);
+          year =
+            year + yearIncrement > finalYear ? baseYear : year + yearIncrement;
+        };
+
+        interval(floating, 1000);
+      }
     }
   }, [graphDiv]);
   return (

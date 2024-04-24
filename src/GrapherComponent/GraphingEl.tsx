@@ -5,7 +5,7 @@ import {
   List,
   Map,
   ScatterChart,
-  Ungroup,
+  // Ungroup,
 } from 'lucide-react';
 import styled from 'styled-components';
 import {
@@ -172,7 +172,7 @@ export function DataExplorerGraphingEl(props: Props) {
             />
             <TabText>Multi Country Trends</TabText>
           </button>
-          {disaggregationMetaData.length > 0 ? (
+          {/* {disaggregationMetaData.length > 0 ? (
             <button
               type='button'
               className={`tabs-for-graphing-interface${
@@ -197,7 +197,7 @@ export function DataExplorerGraphingEl(props: Props) {
               />
               <TabText>Disaggregation</TabText>
             </button>
-          ) : null}
+          ) : null} */}
           <button
             type='button'
             className={`tabs-for-graphing-interface${
@@ -276,6 +276,28 @@ export function CountryGraphingEl(props: CountryGraphingElProps) {
           <button
             type='button'
             className={`tabs-for-graphing-interface${
+              graphType === 'map' ? ' selected' : ''
+            }`}
+            onClick={() => {
+              updateGraphType('map');
+            }}
+            style={{
+              flexWrap: 'wrap',
+            }}
+            title='Maps'
+          >
+            <Map
+              size={40}
+              strokeWidth={1.25}
+              stroke={
+                graphType === 'map' ? 'var(--blue-600)' : 'var(--gray-500)'
+              }
+            />
+            <TabText>Maps</TabText>
+          </button>
+          <button
+            type='button'
+            className={`tabs-for-graphing-interface${
               graphType === 'trendLine' ? ' selected' : ''
             }`}
             onClick={() => {
@@ -295,9 +317,9 @@ export function CountryGraphingEl(props: CountryGraphingElProps) {
                   : 'var(--gray-500)'
               }
             />
-            <TabText>Dual Axes Line Chart</TabText>
+            <TabText>Line Chart</TabText>
           </button>
-          {disaggregationMetaData.length > 0 ? (
+          {/* {disaggregationMetaData.length > 0 ? (
             <button
               type='button'
               className={`tabs-for-graphing-interface${
@@ -322,7 +344,31 @@ export function CountryGraphingEl(props: CountryGraphingElProps) {
               />
               <TabText>Disaggregation</TabText>
             </button>
-          ) : null}
+          ) : null} */}
+          <button
+            type='button'
+            className={`tabs-for-graphing-interface${
+              graphType === 'scatterPlot' ? ' selected' : ''
+            }`}
+            onClick={() => {
+              updateGraphType('scatterPlot');
+            }}
+            style={{
+              flexWrap: 'wrap',
+            }}
+            title='Correlation'
+          >
+            <ScatterChart
+              size={40}
+              strokeWidth={1.25}
+              stroke={
+                graphType === 'scatterPlot'
+                  ? 'var(--blue-600)'
+                  : 'var(--gray-500)'
+              }
+            />
+            <TabText>Correlation</TabText>
+          </button>
           <button
             type='button'
             className={`tabs-for-graphing-interface${
@@ -343,7 +389,7 @@ export function CountryGraphingEl(props: CountryGraphingElProps) {
                 graphType === 'dataList' ? 'var(--blue-600)' : 'var(--gray-500)'
               }
             />
-            <TabText>Data List</TabText>
+            <TabText>Indicator Availability</TabText>
           </button>
         </div>
         <div className='graph-container'>

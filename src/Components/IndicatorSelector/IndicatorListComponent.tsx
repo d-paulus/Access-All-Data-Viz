@@ -35,7 +35,7 @@ const ViewButton = styled.button`
 
 function IndicatorListComponent(props: Props) {
   const { title, indicators, updateIndicator, closeModal } = props;
-  const [expandedState, setExpandedState] = useState(true);
+  const [expandedState, setExpandedState] = useState(false);
   return (
     <div className='margin-top-09'>
       <div

@@ -19,39 +19,61 @@ export const HDI_LEVELS = ['Low', 'Medium', 'High', 'Very High'];
 
 export const SIGNATURE_SOLUTIONS_LIST: (
   | 'All'
-  | 'Energy'
-  | 'Environment'
-  | 'Gender'
-  | 'Governance'
-  | 'Poverty and Inequality'
-  | 'Resilience'
+  | 'Infrastructure & access to social services'
+  | 'Economic stability'
+  | 'Gender Equality'
+  | 'Social cohesion, gender equality & non-discrimination'
+  | 'Environment & climate'
+  | 'Public health'
+  | 'Food security, agriculture & land'
+  | 'Internal security'
+  | 'Political stability'
+  | 'Regional & global influences'
+  | 'Justice & rule of law'
+  | 'Displacement & migration'
+  | 'Democratic space'
+  | 'Unknown RMR Risk Area'
 )[] = [
   'All',
-  'Energy',
-  'Environment',
-  'Gender',
-  'Governance',
-  'Poverty and Inequality',
-  'Resilience',
+  'Infrastructure & access to social services',
+  'Economic stability',
+  'Gender Equality',
+  'Social cohesion, gender equality & non-discrimination',
+  'Environment & climate',
+  'Public health',
+  'Food security, agriculture & land',
+  'Internal security',
+  'Political stability',
+  'Regional & global influences',
+  'Justice & rule of law',
+  'Displacement & migration',
+  'Democratic space',
+  'Unknown RMR Risk Area',
 ];
 
 export const METADATALINK =
-  'https://raw.githubusercontent.com/UNDP-Data/Indicators-MetaData/main/indicatorMetaData.json';
+  // 'https://raw.githubusercontent.com/UNDP-Data/Indicators-MetaData/main/indicatorMetaData.json';
+  'https://raw.githubusercontent.com/d-paulus/Indicators-MetaData/main/indicatorMetaData.json';
 
 export const DISAGGREGATIONMETADATALINK =
-  'https://raw.githubusercontent.com/UNDP-Data/Indicators-MetaData/main/disaggregationMetaData.json';
+  // 'https://raw.githubusercontent.com/UNDP-Data/Indicators-MetaData/main/disaggregationMetaData.json';
+  'https://raw.githubusercontent.com/d-paulus/Indicators-MetaData/main/disaggregationMetaData.json';
 
 export const SUBNATIONALMETADATALINK =
-  'https://raw.githubusercontent.com/UNDP-Data/Indicators-MetaData/main/subNationDataMetaDataByCountries/';
+  // 'https://raw.githubusercontent.com/UNDP-Data/Indicators-MetaData/main/subNationDataMetaDataByCountries/';
+  'https://raw.githubusercontent.com/d-paulus/Indicators-MetaData/main/subNationDataMetaDataByCountries/';
 
 export const DATALINK =
-  'https://raw.githubusercontent.com/UNDP-Data/Access-All-Data-Data-Repo/main';
+  // 'https://raw.githubusercontent.com/UNDP-Data/Access-All-Data-Data-Repo/main';
+  'https://raw.githubusercontent.com/d-paulus/Access-All-Data-DC-Data-Repo/main';
 
 export const COUNTRYTAXONOMYLINK =
-  'https://raw.githubusercontent.com/UNDP-Data/country-taxonomy-from-azure/main/country_territory_groups.json';
+  // 'https://raw.githubusercontent.com/UNDP-Data/country-taxonomy-from-azure/main/country_territory_groups.json';
+  'https://raw.githubusercontent.com/d-paulus/country-taxonomy-from-azure/main/country_territory_groups.json';
 
 export const SDGDATASOURCELINK =
-  'https://raw.githubusercontent.com/UNDP-Data/SDG-Accelerator/production/public';
+  // 'https://raw.githubusercontent.com/UNDP-Data/SDG-Accelerator/production/public';
+  'https://raw.githubusercontent.com/d-paulus/SDG-Accelerator/production/public';
 
 export const REGION_ACRONYMS = ['AP', 'AS', 'ECA', 'LAC', 'SSA'];
 

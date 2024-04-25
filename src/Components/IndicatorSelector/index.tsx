@@ -238,12 +238,13 @@ function IndicatorSelector(props: Props) {
               width: 'calc(50% - 0.5rem)',
             }}
           >
-            <p className='label'>Filter by tags</p>
+            {/* <p className='label'>Filter by tags</p> */}
+            <p className='label'> </p>
             <Select
               className='undp-select'
               showSearch
               maxTagCount='responsive'
-              style={{ width: '100%' }}
+              style={{ width: '100%', display: 'none' }}
               mode='multiple'
               allowClear
               clearIcon={<div className='clearIcon' />}
@@ -267,12 +268,13 @@ function IndicatorSelector(props: Props) {
               width: 'calc(50% - 0.5rem)',
             }}
           >
-            <p className='label'>Filter by SDGs</p>
+            {/* <p className='label'>Filter by SDGs</p> */}
+            <p className='label'> </p>
             <Select
               className='undp-select'
               showSearch
               maxTagCount='responsive'
-              style={{ width: '100%' }}
+              style={{ width: '100%', display: 'none' }}
               mode='multiple'
               allowClear
               clearIcon={<div className='clearIcon' />}

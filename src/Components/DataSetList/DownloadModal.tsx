@@ -18,6 +18,7 @@ import {
   SDG_GOALS,
   TAGS_LIST,
   DATALINK,
+  SIGNATURE_SOLUTIONS_LIST,
 } from '../../Constants';
 import { GetYearsArrayFromIndicator } from '../../Utils/GetYearsArray';
 
@@ -122,6 +123,7 @@ export function DownloadModal(props: Props) {
   >(undefined);
   const [sdgForFilter, setSDGForFilter] = useState<string[]>([]);
   const [tagsForFilter, setTagsForFilter] = useState<string[]>([]);
+  const [ssForFilter, setSSForFilter] = useState<string[]>([]);
   const [selectedIndicators, setSelectedIndicators] = useState<
     IndicatorMetaDataType[]
   >([]);
@@ -148,8 +150,14 @@ export function DownloadModal(props: Props) {
               d => intersection(d.SDGs, sdgForFilter).length > 0,
             )
           : indicatorFilterByTags;
+      const indicatorFilterByRMRs =
+        ssForFilter.length !== 0 && ssForFilter
+          ? indicatorFilterBySDGs.filter(
+              d => intersection(d.SignatureSolution, ssForFilter).length > 0,
+            )
+          : indicatorFilterBySDGs;
       const indicators = sortBy(
-        indicatorFilterBySDGs,
+        indicatorFilterByRMRs,
         d => d.IndicatorLabel,
       ).filter(
         d =>
@@ -162,7 +170,7 @@ export function DownloadModal(props: Props) {
       );
       setIndicatorsList(indicators);
     }
-  }, [indicatorSearch, sdgForFilter, tagsForFilter]);
+  }, [indicatorSearch, ssForFilter, sdgForFilter, tagsForFilter]);
   return (
     <div>
       <div className='flex-div gap-07'>
@@ -235,15 +243,48 @@ export function DownloadModal(props: Props) {
                 style={{
                   flexGrow: 1,
                   minWidth: '17.5rem',
-                  width: 'calc(50% - 0.5rem)',
+                  width: 'calc(25% - 0.75rem)',
                 }}
               >
-                <p className='label'>Filter by tags</p>
+                <p className='label'>Filter by RMR Risk Area</p>
                 <Select
                   className='undp-select'
                   showSearch
                   maxTagCount='responsive'
                   style={{ width: '100%' }}
+                  mode='multiple'
+                  allowClear
+                  clearIcon={<div className='clearIcon' />}
+                  placeholder='All RMR Risk Areas'
+                  onChange={d => {
+                    setSSForFilter(d);
+                  }}
+                  value={ssForFilter}
+                >
+                  {SIGNATURE_SOLUTIONS_LIST.map(d => (
+                    <Select.Option
+                      className='undp-select-option'
+                      key={d.split(':')[0]}
+                    >
+                      {d}
+                    </Select.Option>
+                  ))}
+                </Select>
+              </div>
+              <div
+                style={{
+                  flexGrow: 1,
+                  minWidth: '17.5rem',
+                  width: 'calc(50% - 0.5rem)',
+                }}
+              >
+                {/* <p className='label'>Filter by tags</p> */}
+                <p className='label'> </p>
+                <Select
+                  className='undp-select'
+                  showSearch
+                  maxTagCount='responsive'
+                  style={{ width: '100%', display: 'none' }}
                   mode='multiple'
                   allowClear
                   clearIcon={<div className='clearIcon' />}
@@ -267,11 +308,12 @@ export function DownloadModal(props: Props) {
                   width: 'calc(50% - 0.5rem)',
                 }}
               >
-                <p className='label'>Filter by sdgs</p>
+                {/* <p className='label'>Filter by sdgs</p> */}
+                <p className='label'> </p>
                 <Select
                   className='undp-select'
                   maxTagCount='responsive'
-                  style={{ width: '100%' }}
+                  style={{ width: '100%', display: 'none' }}
                   mode='multiple'
                   allowClear
                   clearIcon={<div className='clearIcon' />}
@@ -391,7 +433,10 @@ export function DownloadModal(props: Props) {
                       }
                     }}
                   >
-                    {d.IndicatorLabel}
+                    <div>
+                      {d.IndicatorLabel}{' '}
+                      {d.LabelSuffix && ` (${d.LabelSuffix})`}
+                    </div>
                   </Checkbox>
                 </div>
               ))}
@@ -408,7 +453,8 @@ export function DownloadModal(props: Props) {
             <h6 className='undp-typography'>Select Countries</h6>
             <Select
               className='undp-select margin-bottom-05'
-              placeholder='Filter by UNDP bureau'
+              // placeholder='Filter by UNDP bureau'
+              placeholder='Filter by region'
               style={{ flexGrow: 0 }}
               showSearch
               value={filteredRegion}

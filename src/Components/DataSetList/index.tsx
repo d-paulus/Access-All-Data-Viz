@@ -294,7 +294,7 @@ export function DataSetList(props: Props) {
                 width: 'calc(25% - 0.75rem)',
               }}
             >
-              <p className='label'>Filter by topic</p>
+              <p className='label'>Filter by RMR Risk Area</p>
               <Select
                 className='undp-select'
                 showSearch
@@ -302,7 +302,7 @@ export function DataSetList(props: Props) {
                 style={{ width: '100%' }}
                 allowClear
                 clearIcon={<div className='clearIcon' />}
-                placeholder='All Topics'
+                placeholder='All RMR Risk Area'
                 onChange={d => {
                   setSSForFilter(d);
                 }}
@@ -322,12 +322,13 @@ export function DataSetList(props: Props) {
                 width: 'calc(25% - 0.75rem)',
               }}
             >
-              <p className='label'>Filter by tags</p>
+              {/* <p className='label'>Filter by tags</p> */}
+              <p className='label'> </p>
               <Select
                 className='undp-select'
                 showSearch
                 maxTagCount='responsive'
-                style={{ width: '100%' }}
+                style={{ width: '100%', display: 'none' }}
                 mode='multiple'
                 allowClear
                 clearIcon={<div className='clearIcon' />}
@@ -351,12 +352,13 @@ export function DataSetList(props: Props) {
                 width: 'calc(25% - 0.75rem)',
               }}
             >
-              <p className='label'>Filter by SDGs</p>
+              {/* <p className='label'>Filter by SDGs</p> */}
+              <p className='label'> </p>
               <Select
                 className='undp-select'
                 mode='multiple'
                 maxTagCount='responsive'
-                style={{ width: '100%' }}
+                style={{ width: '100%', display: 'none' }}
                 allowClear
                 clearIcon={<div className='clearIcon' />}
                 placeholder='All SDGs'

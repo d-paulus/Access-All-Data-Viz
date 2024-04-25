@@ -61,6 +61,8 @@ const DownloadMultipleIndicatorExcel = (
         country: 'Country or Area',
         countryCode: 'ISO-3 Code',
         indicator: 'Indicator',
+        unit: 'Unit',
+        source: 'Source',
       },
     ];
     years.forEach(d => {
@@ -83,6 +85,13 @@ const DownloadMultipleIndicatorExcel = (
             indicators[
               indicators.findIndex(j => j.DataKey === filteredData.indicator)
             ].IndicatorLabel,
+          unit: indicators[
+            indicators.findIndex(j => j.DataKey === filteredData.indicator)
+          ].LabelSuffix,
+          source:
+            indicators[
+              indicators.findIndex(j => j.DataKey === filteredData.indicator)
+            ].DataSourceName,
         };
         years.forEach(yrs => {
           dataToPush[`Year_${yrs}`] =

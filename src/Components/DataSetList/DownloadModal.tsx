@@ -133,6 +133,22 @@ export function DownloadModal(props: Props) {
   const [sdgForFilter, setSDGForFilter] = useState<string[]>([]);
   const [tagsForFilter, setTagsForFilter] = useState<string[]>([]);
   const [ssForFilter, setSSForFilter] = useState<string[]>([]);
+  const [sourcesForFilter, setSourcesForFilter] = useState<string[]>([]);
+  // const [sourceList, setSourceList] = useState<string[] | undefined>(undefined);
+  const sourceList = [
+    'International Monetary Fund WEO',
+    'IEP - Global Peace Index',
+    'Transparency International',
+    'The Fund for Peace',
+    'IDMC - Internally displaced people',
+    'SDG Index - Sachs et al.',
+    'World Bank WDI',
+    'International Energy Agency',
+    'Notre Dame Global Adaptation Initiative (ND GAIN)',
+    'UNODC - Intentional Homicide',
+    'UNDP - Human Development Index',
+  ];
+
   const [selectedIndicators, setSelectedIndicators] = useState<
     IndicatorMetaDataType[]
   >([]);
@@ -165,8 +181,20 @@ export function DownloadModal(props: Props) {
               d => intersection(d.SignatureSolution, ssForFilter).length > 0,
             )
           : indicatorFilterBySDGs;
+      console.log('indicatorFilterByRMRs');
+      console.log(indicatorFilterByRMRs);
+      console.log('sourcesForFilter');
+      console.log(sourcesForFilter);
+      const indicatorFilterBySources =
+        sourcesForFilter.length > 0
+          ? indicatorFilterByRMRs.filter(d =>
+              sourcesForFilter.includes(d.DataSourceName),
+            )
+          : indicatorFilterByRMRs;
+      console.log('indicatorFilterBySources');
+      console.log(indicatorFilterBySources);
       const indicators = sortBy(
-        indicatorFilterByRMRs,
+        indicatorFilterBySources,
         d => d.IndicatorLabel,
       ).filter(
         d =>
@@ -178,8 +206,18 @@ export function DownloadModal(props: Props) {
           ),
       );
       setIndicatorsList(indicators);
+      // console.log('indicators');
+      // console.log(indicators);
+      // console.log('indicatorsList');
+      // console.log(indicatorsList);
     }
-  }, [indicatorSearch, ssForFilter, sdgForFilter, tagsForFilter]);
+  }, [
+    indicatorSearch,
+    sourcesForFilter,
+    ssForFilter,
+    sdgForFilter,
+    tagsForFilter,
+  ]);
   return (
     <div>
       <div className='flex-div gap-07'>
@@ -255,6 +293,39 @@ export function DownloadModal(props: Props) {
                   width: 'calc(25% - 0.75rem)',
                 }}
               >
+                <p className='label'>Filter by source</p>
+                <Select
+                  className='undp-select'
+                  showSearch
+                  maxTagCount='responsive'
+                  style={{ width: '100%' }}
+                  mode='multiple'
+                  allowClear
+                  clearIcon={<div className='clearIcon' />}
+                  placeholder='All Sources'
+                  onChange={d => {
+                    console.log('d');
+                    console.log(d);
+                    setSourcesForFilter(d);
+                    console.log('sourcesForFilter');
+                    console.log(sourcesForFilter);
+                  }}
+                  value={sourcesForFilter}
+                >
+                  {sourceList.map(d => (
+                    <Select.Option className='undp-select-option' key={d}>
+                      {d}
+                    </Select.Option>
+                  ))}
+                </Select>
+              </div>
+              <div
+                style={{
+                  flexGrow: 1,
+                  minWidth: '17.5rem',
+                  width: 'calc(25% - 0.75rem)',
+                }}
+              >
                 <p className='label'>Filter by RMR Risk Area</p>
                 <Select
                   className='undp-select'
@@ -266,7 +337,11 @@ export function DownloadModal(props: Props) {
                   clearIcon={<div className='clearIcon' />}
                   placeholder='All RMR Risk Areas'
                   onChange={d => {
+                    console.log('d');
+                    console.log(d);
                     setSSForFilter(d);
+                    console.log('ssForFilter');
+                    console.log(ssForFilter);
                   }}
                   value={ssForFilter}
                 >

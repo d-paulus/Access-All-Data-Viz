@@ -181,18 +181,18 @@ export function DownloadModal(props: Props) {
               d => intersection(d.SignatureSolution, ssForFilter).length > 0,
             )
           : indicatorFilterBySDGs;
-      console.log('indicatorFilterByRMRs');
-      console.log(indicatorFilterByRMRs);
-      console.log('sourcesForFilter');
-      console.log(sourcesForFilter);
+      // console.log('indicatorFilterByRMRs');
+      // console.log(indicatorFilterByRMRs);
+      // console.log('sourcesForFilter');
+      // console.log(sourcesForFilter);
       const indicatorFilterBySources =
         sourcesForFilter.length > 0
           ? indicatorFilterByRMRs.filter(d =>
               sourcesForFilter.includes(d.DataSourceName),
             )
           : indicatorFilterByRMRs;
-      console.log('indicatorFilterBySources');
-      console.log(indicatorFilterBySources);
+      // console.log('indicatorFilterBySources');
+      // console.log(indicatorFilterBySources);
       const indicators = sortBy(
         indicatorFilterBySources,
         d => d.IndicatorLabel,
@@ -304,11 +304,11 @@ export function DownloadModal(props: Props) {
                   clearIcon={<div className='clearIcon' />}
                   placeholder='All Sources'
                   onChange={d => {
-                    console.log('d');
-                    console.log(d);
+                    // console.log('d');
+                    // console.log(d);
                     setSourcesForFilter(d);
-                    console.log('sourcesForFilter');
-                    console.log(sourcesForFilter);
+                    // console.log('sourcesForFilter');
+                    // console.log(sourcesForFilter);
                   }}
                   value={sourcesForFilter}
                 >

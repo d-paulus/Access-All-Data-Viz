@@ -130,7 +130,10 @@ export function ListEl(props: Props) {
                       ].IndicatorLabel
                     }
                   </p>
-                  <p className='undp-typography'>
+                  <p
+                    className='undp-typography'
+                    style={{ fontSize: '0.75rem' }}
+                  >
                     {
                       indicators[
                         indicators.findIndex(el => el.DataKey === d.indicator)
@@ -177,15 +180,21 @@ export function ListEl(props: Props) {
                         : d.yearlyData[d.yearlyData.length - 1].value}
                       {indicators[
                         indicators.findIndex(el => el.DataKey === d.indicator)
-                      ].LabelSuffix
-                        ? ` ${
+                      ].LabelSuffix && (
+                        <span
+                          className='label-suffix'
+                          style={{ fontSize: '0.8rem' }}
+                        >
+                          {' '}
+                          {
                             indicators[
                               indicators.findIndex(
                                 el => el.DataKey === d.indicator,
                               )
                             ].LabelSuffix
-                          }`
-                        : ''}
+                          }
+                        </span>
+                      )}
                     </p>
                     <p
                       className='undp-typography margin-bottom-00'

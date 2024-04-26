@@ -36,12 +36,14 @@ function ExportExcel(props: Props) {
       countryCode: 'ISO-3 Code',
       year: 'Year',
       value: indicatorTitle,
+      unit: 'Unit',
+      source: 'Source',
     },
   ];
 
   const exportToExcel = (csvData: any) => {
     const ws = XLSX.utils.json_to_sheet(Heading, {
-      header: ['country', 'countryCode', 'year', 'value'],
+      header: ['country', 'countryCode', 'year', 'value', 'unit', 'source'],
       skipHeader: true,
     });
 
@@ -49,7 +51,7 @@ function ExportExcel(props: Props) {
 
     ws['!cols'] = wscols;
     XLSX.utils.sheet_add_json(ws, csvData, {
-      header: ['country', 'countryCode', 'year', 'value'],
+      header: ['country', 'countryCode', 'year', 'value', 'unit', 'source'],
       skipHeader: true,
       origin: -1, // ok
     });

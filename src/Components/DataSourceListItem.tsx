@@ -20,6 +20,8 @@ const dataTable = (
   data.forEach(d => {
     const country = d['Country or Area'];
     const countryCode = d['Alpha-3 code'];
+    const unit = indicator.LabelSuffix;
+    const source = indicator.DataSourceName;
     GetYearsArray(data, indicator).forEach(year => {
       if (
         d.indicators.findIndex(ind => ind.indicator === indicator.DataKey) !==
@@ -39,6 +41,8 @@ const dataTable = (
             countryCode,
             year,
             value,
+            unit,
+            source,
           });
         }
       }
@@ -71,6 +75,8 @@ const dataTableForExcel = (
   data.forEach(d => {
     const country = d['Country or Area'];
     const countryCode = d['Alpha-3 code'];
+    const unit = indicator.LabelSuffix;
+    const source = indicator.DataSourceName;
     yearList.forEach(year => {
       if (
         d.indicators.findIndex(ind => ind.indicator === indicator.DataKey) !==
@@ -90,6 +96,8 @@ const dataTableForExcel = (
             countryCode,
             year,
             value,
+            unit,
+            source,
           });
         }
       }
@@ -185,6 +193,8 @@ export function DataSourceListItem(props: Props) {
             { label: 'Alpha-3 code', key: 'countryCode' },
             { label: 'Year', key: 'year' },
             { label: indicatorData.IndicatorLabel, key: 'value' },
+            { label: 'Unit', key: 'unit' },
+            { label: 'Source', key: 'source' },
           ]}
           enclosingCharacter=''
           separator=';'
@@ -247,6 +257,8 @@ export function DataSourceListMinifiedItem(props: Props) {
             { label: 'Alpha-3 code', key: 'countryCode' },
             { label: 'Year', key: 'year' },
             { label: indicatorData.IndicatorLabel, key: 'value' },
+            { label: 'Unit', key: 'unit' },
+            { label: 'Source', key: 'source' },
           ]}
           enclosingCharacter=''
           separator=';'

@@ -65,6 +65,8 @@ export function GrapherComponent(props: Props) {
     indicators: [],
   });
   const [loading, setLoading] = useState<boolean>(true);
+  // console.log('data');
+  // console.log(data);
   useEffect(() => {
     let q = queue();
     setLoading(true);
@@ -72,6 +74,9 @@ export function GrapherComponent(props: Props) {
       xAxisIndicator !== undefined &&
       data[0].indicators.findIndex(d => d.indicator === xAxisIndicator) === -1
     ) {
+      console.log('xAxisIndicator');
+      console.log(xAxisIndicator);
+      // const indicatorId = '1200';
       const indicatorId =
         indicators[indicators.findIndex(d => d.DataKey === xAxisIndicator)].id;
       q = q.defer(json, `${DATALINK}/indicatorData/${indicatorId}.json`);

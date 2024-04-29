@@ -93,17 +93,38 @@ function IndicatorSelector(props: Props) {
   );
   const [sdgForFilter, setSDGForFilter] = useState<string[]>([]);
   const [tagsForFilter, setTagsForFilter] = useState<string[]>([]);
+  const sourceList = [
+    'International Monetary Fund WEO',
+    'IEP - Global Peace Index',
+    'Transparency International',
+    'The Fund for Peace',
+    'IDMC - Internally displaced people',
+    'SDG Index - Sachs et al.',
+    'World Bank WDI',
+    'International Energy Agency',
+    'Notre Dame Global Adaptation Initiative (ND GAIN)',
+    'UNODC - Intentional Homicide',
+    'UNDP - Human Development Index',
+  ];
+  const [sourcesForFilter, setSourcesForFilter] = useState<string[]>([]);
+
   useEffect(() => {
     const indicatorFilterByTags =
       tagsForFilter.length !== 0 && tagsForFilter
         ? indicators.filter(d => intersection(d.Tags, tagsForFilter).length > 0)
         : indicators;
-    const indicatorFilterBySDGs =
-      sdgForFilter.length !== 0 && sdgForFilter
-        ? indicatorFilterByTags.filter(
-            d => intersection(d.SDGs, sdgForFilter).length > 0,
+    const indicatorFilterBySources =
+      sourcesForFilter.length > 0
+        ? indicatorFilterByTags.filter(d =>
+            sourcesForFilter.includes(d.DataSourceName),
           )
         : indicatorFilterByTags;
+    const indicatorFilterBySDGs =
+      sdgForFilter.length !== 0 && sdgForFilter
+        ? indicatorFilterBySources.filter(
+            d => intersection(d.SDGs, sdgForFilter).length > 0,
+          )
+        : indicatorFilterBySources;
     const indicatorsFiltered = searchPhrase
       ? sortBy(indicatorFilterBySDGs, d => d.IndicatorLabel).filter(
           d =>
@@ -116,7 +137,7 @@ function IndicatorSelector(props: Props) {
         )
       : sortBy(indicatorFilterBySDGs, d => d.IndicatorLabel);
     setIndicatorList(openModal ? indicatorsFiltered : indicators);
-  }, [searchPhrase, sdgForFilter, tagsForFilter, openModal]);
+  }, [searchPhrase, sourcesForFilter, sdgForFilter, tagsForFilter, openModal]);
   const closeModal = () => {
     setTagsForFilter([]);
     setSDGForFilter([]);
@@ -231,6 +252,34 @@ function IndicatorSelector(props: Props) {
         style={{ maxWidth: '90%' }}
       >
         <div className='margin-bottom-07 flex-div'>
+          <div
+            style={{
+              flexGrow: 1,
+              minWidth: '17.5rem',
+              width: 'calc(25% - 0.75rem)',
+            }}
+          >
+            <p className='label'>Filter by source</p>
+            <Select
+              className='undp-select'
+              showSearch
+              maxTagCount='responsive'
+              style={{ width: '100%' }}
+              allowClear
+              clearIcon={<div className='clearIcon' />}
+              placeholder='All Sources'
+              onChange={d => {
+                setSourcesForFilter(d);
+              }}
+              value={sourcesForFilter}
+            >
+              {sourceList.map(d => (
+                <Select.Option className='undp-select-option' key={d}>
+                  {d}
+                </Select.Option>
+              ))}
+            </Select>
+          </div>
           <div
             style={{
               flexGrow: 1,

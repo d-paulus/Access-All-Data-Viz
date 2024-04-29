@@ -181,18 +181,12 @@ export function DownloadModal(props: Props) {
               d => intersection(d.SignatureSolution, ssForFilter).length > 0,
             )
           : indicatorFilterBySDGs;
-      // console.log('indicatorFilterByRMRs');
-      // console.log(indicatorFilterByRMRs);
-      // console.log('sourcesForFilter');
-      // console.log(sourcesForFilter);
       const indicatorFilterBySources =
         sourcesForFilter.length > 0
           ? indicatorFilterByRMRs.filter(d =>
               sourcesForFilter.includes(d.DataSourceName),
             )
           : indicatorFilterByRMRs;
-      // console.log('indicatorFilterBySources');
-      // console.log(indicatorFilterBySources);
       const indicators = sortBy(
         indicatorFilterBySources,
         d => d.IndicatorLabel,
@@ -206,10 +200,6 @@ export function DownloadModal(props: Props) {
           ),
       );
       setIndicatorsList(indicators);
-      // console.log('indicators');
-      // console.log(indicators);
-      // console.log('indicatorsList');
-      // console.log(indicatorsList);
     }
   }, [
     indicatorSearch,
